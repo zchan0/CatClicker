@@ -16,17 +16,26 @@
 }
 
 .list {
-    width: 30%;
+    width: 20%;
 }
 
-.list ul {
-    margin-top: 0;
+.list button {
+    margin-top: 10px;
 }
 
 .widgets {
-    width: 70%;
+    width: 80%;
     display: flex;
-    flex-wrap: wrap;
+    flex-flow: column wrap;
+}
+
+.admin-panel {
+    margin: 15px auto;
+    text-align: center;
+}
+
+.buttons button {
+    margin: 10px 15px;
 }
 
 .widget {

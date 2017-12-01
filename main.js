@@ -20,7 +20,9 @@ class Widget {
             'id': name
         });
         this.cntSpan = $('<span>').text('0');
-        const caption = $('<p>').text(`${name} click `);
+        this.nameSpan = $('<span>').text(`${name} `);
+        const caption = $('<p>');
+        caption.append(this.nameSpan);
         caption.append(this.cntSpan);
         this.widget = $('<div>', {
             'class': 'widget'
@@ -36,6 +38,20 @@ class Widget {
 
     updateCount(cnt) {
         this.cntSpan.text(cnt);
+    }
+
+    updateName(name) {
+        this.nameSpan.text(`${name} `);
+    }
+
+    updateImage(src) {
+        this.img.attr('src', src);
+    }
+
+    render(name, src, cnt) {
+        this.updateName(name);
+        this.updateImage(src);
+        this.updateCount(cnt);
     }
 }
 
@@ -57,11 +73,52 @@ class List {
     }
 }
 
+class AdminPanel {
+    constructor() {
+        this.adminButton = $('<button>', {
+            'name': 'admin'
+        }).text('Admin');
+
+        this.panel = $('.admin-panel');
+        this.nameInput = $('#name');
+        this.imgSrcInput = $('#imgSrc');
+        this.clicksInput = $('#clicks');
+        this.submitBtn = $(`button[name = 'submit']`);
+        this.cancelBtn = $(`button[name = 'cancel']`);
+
+        const that = this;
+        this.adminButton.click(function() {
+            that.panel.toggle();
+        });
+        this.cancelBtn.click(function() {
+            that.panel.toggle();
+        });
+    }
+
+    render(name, src, clickCount) {
+        this.nameInput.val(name);
+        this.imgSrcInput.val(src);
+        this.clicksInput.val(clickCount);
+    }
+
+    addClickHandler(handler) {
+        const that = this;
+        this.submitBtn.click(function() {
+            const cat = {
+                'name': that.nameInput.val(),
+                'src': that.imgSrcInput.val(),
+                'clickCount': that.clicksInput.val()
+            }
+            handler(cat);
+        });
+    }
+}
+
 // octopus
 class Controller {
     constructor() {
         this.cats = [];
-        for (let index = 0; index < 4; index++) {
+        for (let index = 0; index < 5; index++) {
             const cat = new Cat(index);
             this.cats.push(cat);
         }
@@ -77,10 +134,25 @@ class Controller {
         }, []);
         this.list = new List(names);
 
+        // panel
+        this.admin = new AdminPanel();
+        this.admin.panel.hide();
+        this.list.ul.append(this.admin.adminButton);
+
+        // init
         this.currentIndex = 0;
         this.widgets[0].widget.show();
 
         this.setupHandlers();
+
+        // render once
+        this.widgets.forEach(w => {
+            $('.widgets').append(w.widget);
+        });
+
+        $('.list').append(this.list.ul);
+
+        this.render();
     }
 
     setupHandlers() {
@@ -93,14 +165,18 @@ class Controller {
         this.list.addClickHandler(e => {
             that.switchCat(e.target.textContent);
         });
+        this.admin.addClickHandler(cat => {
+            // widget
+            that.widgets[that.currentIndex].render(cat.name, cat.src, cat.clickCount);
+            // list
+            that.list.lis[that.currentIndex].text(cat.name);
+            that.admin.panel.hide();
+        });
     }
 
     render() {
-        this.widgets.forEach(w => {
-            $('.widgets').append(w.widget);
-        });
-
-        $('.list').append(this.list.ul);
+        const cat = this.cats[this.currentIndex];
+        this.admin.render(cat.name, cat.src, cat.clickCount);
     }
 
     switchCat(toCat) {
@@ -115,6 +191,7 @@ class Controller {
         const clickedCat = this.cats[index];
         clickedCat.increClickCount();
         this.widgets[index].updateCount(clickedCat.clickCount);
+        this.admin.clicksInput.val(clickedCat.clickCount);
     }
 
     getIndexByName(catName) {
@@ -122,5 +199,4 @@ class Controller {
     }
 }
 
-const controller = new Controller();
-controller.render();
+new Controller();
