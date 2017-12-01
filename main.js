@@ -48,10 +48,10 @@ class Widget {
         this.img.attr('src', src);
     }
 
-    render(name, src, cnt) {
-        this.updateName(name);
-        this.updateImage(src);
-        this.updateCount(cnt);
+    render(cat) {
+        this.updateName(cat.name);
+        this.updateImage(cat.src);
+        this.updateCount(cat.cnt);
     }
 }
 
@@ -95,10 +95,10 @@ class AdminPanel {
         });
     }
 
-    render(name, src, clickCount) {
-        this.nameInput.val(name);
-        this.imgSrcInput.val(src);
-        this.clicksInput.val(clickCount);
+    render(cat) {
+        this.nameInput.val(cat.name);
+        this.imgSrcInput.val(cat.src);
+        this.clicksInput.val(cat.clickCount);
     }
 
     addClickHandler(handler) {
@@ -167,16 +167,17 @@ class Controller {
         });
         this.admin.addClickHandler(cat => {
             // widget
-            that.widgets[that.currentIndex].render(cat.name, cat.src, cat.clickCount);
+            that.widgets[that.currentIndex].render(cat);
             // list
             that.list.lis[that.currentIndex].text(cat.name);
+            // hide
             that.admin.panel.hide();
         });
     }
 
     render() {
         const cat = this.cats[this.currentIndex];
-        this.admin.render(cat.name, cat.src, cat.clickCount);
+        this.admin.render(cat);
     }
 
     switchCat(toCat) {
@@ -184,6 +185,7 @@ class Controller {
         this.widgets[this.currentIndex].widget.hide();
         this.currentIndex = index;
         this.widgets[index].widget.show();
+        this.admin.render(this.cats[index]);
     }
 
     updateCount(catName) {
