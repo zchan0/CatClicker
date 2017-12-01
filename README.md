@@ -16,4 +16,4 @@ Cat Clicker
 * 猫区域内的点击数应该对每只猫具有唯一性，并且应该在点击猫的图片时增加。
 
 ### Screenshot
-![cat](http://d.pr/TWYZGF/1YW1sSOK)
+![cat](/screenshot.png)
