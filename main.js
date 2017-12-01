@@ -20,7 +20,7 @@ class Widget {
             'id': name
         });
         this.cntSpan = $('<span>').text('0');
-        const caption = $('<p>').text('click ');
+        const caption = $('<p>').text(`${name} click `);
         caption.append(this.cntSpan);
         this.widget = $('<div>', {
             'class': 'widget'
