@@ -1,4 +1,4 @@
-ud989-cat-clicker-ko-starter
-============================
+使用 Knockout.js 重构 Cat Clicker Pro
+---
 
-ud989-cat-clicker-ko-starter
+starter credits to https://github.com/udacity/ud989-cat-clicker-ko-starter
