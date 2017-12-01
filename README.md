@@ -18,7 +18,7 @@ Cat Clicker
 ### Screenshot
 ![cat](/screenshot_premium.png)
 
-## Cat Clicker 项目高级专业版要求
+## 项目高级专业版要求(lesson 3)
 ### 视觉
 * 该应用程序应该显示
     * 一个按名称列出的猫列表
@@ -40,3 +40,7 @@ Cat Clicker
 
 ### Screenshot
 ![cat](/screenshot_pro.png)
+
+## 使用 Knockout.js 重构 Cat Clicker Pro(lesson 4)
+
+[knockout branch](https://github.com/zchan0/CatClicker/tree/knockout)
