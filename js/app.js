@@ -1,9 +1,42 @@
-const Cat = function() {
-    this.clickCount = ko.observable(0);
-    this.name = ko.observable('Tabby');
-    this.imgSrc = ko.observable('img/4154543904_6e2428c421_z.jpg');
+const initialCats = [
+    {
+        clickCount: 0,
+        name: 'Tabby',
+        imgSrc: 'img/22252709_010df3379e_z.jpg',
+        nicknames: ['Tabby Tabby Tabby']
+    },
+    {
+        clickCount: 0,
+        name: 'Telsa',
+        imgSrc: 'img/434164568_fea0ad4013_z.jpg',
+        nicknames: ['T-bone', 'Mr.T']
+    },
+    {
+        clickCount: 0,
+        name: 'Jack',
+        imgSrc: 'img/1413379559_412a540d29_z.jpg',
+        nicknames: ['Mr.J', 'Joker']
+    },
+    {
+        clickCount: 0,
+        name: 'Selina',
+        imgSrc: 'img/4154543904_6e2428c421_z.jpg',
+        nicknames: ['Little S', 'Princess']
+    },
+    {
+        clickCount: 0,
+        name: 'Ella',
+        imgSrc: 'img/9648464288_2516b35537_z.jpg',
+        nicknames: ['El']
+    },
+]
+
+const Cat = function(data) {
+    this.clickCount = ko.observable(data.clickCount);
+    this.name = ko.observable(data.name);
+    this.imgSrc = ko.observable(data.imgSrc);
     // observable arrays
-    this.nicknames = ko.observableArray(['Tabby', 'T-bone', 'Mr.T', 'BigEgg', 'BigBie']);
+    this.nicknames = ko.observableArray(data.nicknames);
 
     // computed variables
     this.level = ko.computed(function() {
@@ -25,7 +58,13 @@ const Cat = function() {
 const ViewModel = function() {
     // save viewmodel context
     const self = this;
-    this.currentCat = ko.observable( new Cat() );
+
+    this.catList = ko.observableArray([]);
+    initialCats.forEach(catItem => {
+        self.catList.push(new Cat(catItem));
+    });
+
+    this.currentCat = ko.observable(self.catList()[0]);
 
     this.increClickCount = function() {
         self.currentCat().clickCount(self.currentCat().clickCount() + 1);
