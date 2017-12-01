@@ -6,17 +6,17 @@
 </head>
 <body>
     <ul id="cat-list"></ul>
-    <div id="cat">
+    <div data-bind="with: currentCat">
 
-        <h2 data-bind="text:currentCat().name"></h2>
-        <h4 data-bind="text:currentCat().level"></h4>
-        <div data-bind="text:currentCat().clickCount"></div>
-        <img alt="cute cat" data-bind="click:increClickCount, attr: {src: currentCat().imgSrc}">
+        <h2 data-bind="text:name"></h2>
+        <h4 data-bind="text:level"></h4>
+        <div data-bind="text:clickCount"></div>
+        <img alt="cute cat" data-bind="click: $parent.increClickCount, attr: {src: imgSrc}">
 
         <div>
             <h4>Nicknames</h4>
-            <ul data-bind="foreach: currentCat().nicknames">
-                <li data-bind="text:$data"></li>
+            <ul data-bind="foreach: nicknames">
+                <li data-bind="text: $data"></li>
             </ul>
         </div>
 
